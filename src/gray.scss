@@ -1,0 +1,139 @@
+@use "sass:math";
+@use "sass:map";
+// 你要的颜色(key值不能为颜色,英文表示的颜色也不行,但是可以isviolet)
+$default-theme-arr: (
+	isgray: #fff,
+) !default;
+// 你的空间命名(前缀)
+$namespace: "epc" !default;
+// 你的混入白  (会影响到light系列相关的颜色)
+$mix-white-color: #ffffff !default;
+// 你的混入黑 (会影响到dark系列相关的颜色)
+$mix-black-color: #000000 !default;
+//最终的light层级,element默认为 3, 5, 7, 8, 9(需要整数)
+$light-tier: (2,4,6,15,25,45,65,85,92) !default;
+
+// keys和values
+$default-theme-keys: map.keys($default-theme-arr);
+$default-theme-values: map.values($default-theme-arr);
+ 
+// 自定义scss变量
+$default-theme: () !default;
+@each $type in $default-theme-keys {
+	$default-theme: map.deep-merge(
+		(
+			$type: (
+				"base": map.get($default-theme-arr, $type),
+			),
+		),
+		$default-theme
+	) !global;
+}
+// https://sass-lang.com/documentation/values/maps#immutability
+//用白/黑混合颜色来产生亮/暗的层次
+@mixin set-color-mix-level($type, $mode, $number, $mix-color) {
+	$default-theme: map.deep-merge(
+		(
+			$type: (
+				// light-$i:混合(混合的颜色,被混合的颜色,混合多少)
+				// mix($color1, $color2, $weight) 表示$color1的比例为$weight，$color2的比例为1-$weight
+				// math.转百分比(math.转分数(分子,分母)) 
+				// 		如 math.percentage(math.div(2, 10)) => math.percentage(0.2) => 20%
+				// 最终混合出的颜色为:白或黑为20%,传进来的颜色为剩余的80%
+				"#{$mode}-#{$number}":
+					mix(
+						$mix-color,
+						map.get($default-theme, $type, "base"),
+						math.percentage(math.div($number, 100))
+					),
+			),
+		),
+		$default-theme
+	) !global;
+    // @warn $default-theme;
+}
+ 
+// css变量名
+@function joinVarName($list) {
+	$name: "--" + $namespace; //前缀
+	// 遍历变量名 并返回
+	@each $item in $list {
+		@if $item != "" {
+			$name: $name + "-" + $item;
+		}
+	}
+	@return $name;
+}
+//设置CSS var值，因为我们需要将value转换为字符串
+//例如:@include set-css-var-value(('color'， 'primary')， red);
+// --el-color-primary:红色;
+@mixin set-css-var-value($name, $value) {
+	#{joinVarName($name)}: #{$value};
+}
+ 
+// 添加不同的变量颜色
+// light 系列     $colors.primary.light-i
+@each $type in $default-theme-keys {
+	@for $i from 1 through 9 {
+		@include set-color-mix-level($type, "light", $i, $mix-white-color);
+	}
+}
+// dark 系列      $colors.primary.light-i
+@each $type in $default-theme-keys {
+	@for $i from 1 through 100 {
+		@include set-color-mix-level($type, "dark", $i, $mix-black-color);
+	}
+}
+// 自定义颜色
+:root {
+	@for $ii from 1 through length($default-theme-arr) {
+		$this-key: nth($default-theme-keys, $ii);
+		$this-value: nth($default-theme-values, $ii);
+ 
+		@include set-css-var-value(
+			($this-key, "rgb"),
+			(red($this-value), green($this-value), blue($this-value))
+		);
+		@include set-css-var-value($this-key, $this-value);
+		@each $i in $light-tier {
+			// @include set-css-var-value(
+			// 	($this-key, "light", $i),
+			// 	map.get($default-theme, $this-key, "light-#{$i}")
+			// );
+
+            @include set-css-var-value(
+			($this-key, "dark", $i),
+			map.get($default-theme, $this-key, "dark-#{$i}")
+		);
+		}
+		
+	}
+}
+// // 黑暗模式
+// html.dark {
+// 	@for $ii from 1 through length($default-theme-arr) {
+// 		$this-key: nth($default-theme-keys, $ii);
+// 		$this-value: nth($default-theme-values, $ii);
+ 
+// 		@include set-css-var-value(
+// 			($this-key, "rgb"),
+// 			(red($this-value), green($this-value), blue($this-value))
+// 		);
+// 		@include set-css-var-value($this-key, $this-value);
+// 		@each $i in $light-tier {
+// 			@include set-css-var-value(
+// 				($this-key, "light", $i),
+// 				map.get($default-theme, $this-key, "dark-#{$i}")
+// 			);
+// 		}
+// 		@include set-css-var-value(
+// 			($this-key, "dark-2"),
+// 			map.get($default-theme, $this-key, "dark-2")
+// 		);
+// 	}
+// }
+$color1: #000;
+$color2: #fff;
+html {
+    color: mix($color1,$color2, 15%)
+}

@@ -1,0 +1,19 @@
+h1 {
+  color: red;
+}
+.wrap{
+
+  h2{
+
+  }
+}
+
+@mixin baseStyle{
+  width: 100px;
+  height:100px;
+  border: 1px solid red;
+}
+
+.wrap{
+  @include  baseStyle;
+}
