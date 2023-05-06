@@ -144,7 +144,7 @@ body {
 }
 
 .el-tree-node__content {
-  height: 36px !important;
+  height: 32px !important;
 }
 
 .el-tree-node__content:hover {
