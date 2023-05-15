@@ -181,7 +181,6 @@ body {
 
 .el-tag {
         @extend .el-tag;
-        max-width: 112px;
         padding: 0 7px !important;
         .el-select__tags-text {
            display: inherit;
