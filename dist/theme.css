@@ -185,7 +185,7 @@ body {
   --el-menu-bg-color: var(--epc-gray-bg-2);
   --el-menu-text-color:#5a5a5a;
   --el-menu-base-level-padding: 16px;
-  --el-menu-item-height: 48px;
+  --el-menu-item-height: 40px;
   --el-menu-item-font-size: 16px;
   border-right: 0;
 }
@@ -200,6 +200,8 @@ body {
 }
 .epc-menu .el-menu .el-sub-menu .el-menu-item {
   padding-left: 38px !important;
+  height: 40px;
+  font-size: 14px;
 }
 .epc-menu .el-menu--collapse {
   width: 48px !important;
