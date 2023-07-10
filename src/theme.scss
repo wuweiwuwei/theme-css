@@ -593,6 +593,7 @@ $bg-color: var(--el-color-primary);
 }
 .el-collapse-item {
         margin-bottom: 15px;
+        box-shadow: none;
 }
 .el-collapse-item__header {
         color: var(--el-color-primary) !important;
