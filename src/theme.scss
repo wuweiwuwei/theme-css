@@ -514,10 +514,10 @@ $bg-color: var(--el-color-primary);
 }
 .el-dropdown-menu__item {
         color: #2a334a !important;
-        width: 80px;
-        padding: 5px  0; 
-        padding-left: 10px;
+        min-width: 80px;
         line-height: normal;
+        max-width: 150px;
+        padding: 5px 10px;
 }
 
 .el-dialog {
@@ -602,5 +602,9 @@ $bg-color: var(--el-color-primary);
 .el-collapse-item__header {
         // color: var(--el-color-primary) !important;
 }
+:focus {
+        outline: none;
+      }
+      
 
 

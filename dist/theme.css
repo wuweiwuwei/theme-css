@@ -384,10 +384,10 @@ body {
 
 .el-dropdown-menu__item {
   color: #2a334a !important;
-  width: 80px;
-  padding: 5px 0;
-  padding-left: 10px;
+  min-width: 80px;
   line-height: normal;
+  max-width: 150px;
+  padding: 5px 10px;
 }
 
 .el-dialog {
@@ -464,4 +464,8 @@ body {
 .el-collapse-item {
   margin-bottom: 15px;
   box-shadow: none !important;
+}
+
+:focus {
+  outline: none;
 }
