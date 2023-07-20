@@ -93,14 +93,6 @@ body {
   color: var(--epc-form-item) !important;
 }
 
-.el-select--small {
-  height: 32px !important;
-  line-height: 32px !important;
-}
-.el-select--small .el-input__inner {
-  height: 32px !important;
-}
-
 .el-tag {
   padding: 0 7px !important;
 }
