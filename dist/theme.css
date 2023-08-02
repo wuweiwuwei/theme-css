@@ -80,6 +80,9 @@ body {
   right: -30% !important;
 }
 
+.el-steps--simple {
+  background-color: none;
+}
 .el-steps--simple .el-step__arrow::before {
   height: 1px !important;
   width: 40px !important;
