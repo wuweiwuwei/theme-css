@@ -168,7 +168,7 @@ body {
 }
 
 .el-table--small .el-table__cell {
-  padding: 4px 0 !important;
+  padding: 4px 4px !important;
   font-size: 12px;
 }
 
