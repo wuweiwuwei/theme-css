@@ -81,7 +81,7 @@ body {
 }
 
 .el-steps--simple {
-  background-color: none !important;
+  background-color: inherit;
 }
 .el-steps--simple .el-step__arrow::before {
   height: 1px !important;

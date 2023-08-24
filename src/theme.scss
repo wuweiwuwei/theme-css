@@ -149,7 +149,7 @@ body {
        }
 }
 .el-steps--simple{
-        background-color: none !important;;
+        background-color: inherit;
        //  padding: 16px 21px !important;
         .el-step__arrow {
                 &::before {
